@@ -1,5 +1,7 @@
 import random
 import os
+import shutil
+import file_wipe
 
 def random_string(length=8):
     chars = 'abcdefghijklmnopqrstouvxwyz0123456789_-'
@@ -10,21 +12,32 @@ def random_string(length=8):
 def wipe_directory(directory, passes=3):
     """Securely wipe a directory by wiping its metadata and then deleting it."""
     try:
-        # Overwrite the directory's metadata (like its name) to make it unrecoverable
+        # First, recursively wipe all files and subdirectories
+        for filename in os.listdir(directory):
+            file_path = os.path.join(directory, filename)
+            if os.path.isfile(file_path):
+                # Delegate file wiping to the file_wipe.py logic (which will be imported in main.py)
+                file_wipe.wipe_file(file_path, passes)
+            elif os.path.isdir(file_path):
+                # Recursively wipe subdirectories
+                wipe_directory(file_path, passes)
+
+        # After wiping contents, overwrite the directory's metadata
         wipe_directory_metadata(directory, passes)
 
-        # Finally, remove the directory itself
-        os.rmdir(directory)
+        # Remove the directory itself
+        shutil.rmtree(directory)
+        print(f"Directory {directory} wiped and deleted successfully.")
+
     except Exception as e:
-        print(f"Error handling directory {directory}: {e}")  
-
-
+        print(f"Error wiping directory {directory}: {e}")
 
 def wipe_directory_metadata(directory, passes=3):
+    """Overwrite directory metadata to make it unrecoverable."""
     try:
         for _ in range(passes):
             new_name = os.path.join(os.path.dirname(directory), random_string(8))
             os.rename(directory, new_name)
             directory = new_name
     except Exception as e:
-        print (f"Error wiping directory metadata {directory}: {e}")
+        print(f"Error wiping directory metadata {directory}: {e}")
