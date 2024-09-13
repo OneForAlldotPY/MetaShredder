@@ -18,7 +18,6 @@ def main():
     if os.path.isfile(path):
         file_wipe.wipe_file(path, passes)
     elif os.path.isdir(path):
-        directory_wipe.wipe_directory_metadata(path, passes)
         directory_wipe.wipe_directory(path, passes)
     else: 
         print(f"Error: {path} is neither a file or a directory.")
