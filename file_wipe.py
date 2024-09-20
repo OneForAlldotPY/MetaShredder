@@ -1,6 +1,7 @@
 import os
 import shutil
 import random
+import reporting
 
 #Base pattern for the passes and overwritting
 def overwrite_pattern(file_path, pattern, passes):
@@ -29,6 +30,7 @@ def wipe_file(file_path, passes=3):
 
     try:
         os.remove(file_path)
+        reporting.real_time_output(operation_type="file", path=file_path, passes=passes)
     except Exception as e:
         print(f"Error deleting file {file_path}: {e}")
 
