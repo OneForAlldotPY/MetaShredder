@@ -2,6 +2,7 @@ import random
 import os
 import shutil
 import file_wipe
+import reporting
 
 def random_string(length=8):
     chars = 'abcdefghijklmnopqrstouvxwyz0123456789_-'
@@ -27,7 +28,7 @@ def wipe_directory(directory, passes=3):
 
         # Remove the directory itself
         shutil.rmtree(directory)
-        print(f"Directory {directory} wiped and deleted successfully.")
+        reporting.real_time_output(operation_type="directory", path=directory)
 
     except Exception as e:
         print(f"Error wiping directory {directory}: {e}")
@@ -39,5 +40,6 @@ def wipe_directory_metadata(directory, passes=3):
             new_name = os.path.join(os.path.dirname(directory), random_string(8))
             os.rename(directory, new_name)
             directory = new_name
+        reporting.real_time_output(operation_type="metadata", path=directory, passes=passes)
     except Exception as e:
         print(f"Error wiping directory metadata {directory}: {e}")
