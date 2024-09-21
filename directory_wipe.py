@@ -29,8 +29,11 @@ def wipe_directory(directory, passes=3):
         # Remove the directory itself
         shutil.rmtree(directory)
         reporting.real_time_output(operation_type="directory", path=directory)
+        reporting.SummaryReport.track_directory_wipe(directory)
+        
 
     except Exception as e:
+        reporting.SummaryReport.track_error(f"Error wiping directory {directory}: {e}")
         print(f"Error wiping directory {directory}: {e}")
 
 def wipe_directory_metadata(directory, passes=3):
@@ -42,4 +45,5 @@ def wipe_directory_metadata(directory, passes=3):
             directory = new_name
         reporting.real_time_output(operation_type="metadata", path=directory, passes=passes)
     except Exception as e:
+        reporting.SummaryReport.track_error(f"Error wiping directory metadata {directory}: {e}")
         print(f"Error wiping directory metadata {directory}: {e}")
