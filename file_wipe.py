@@ -3,11 +3,6 @@ import shutil
 import random
 import reporting
 
-#Inits
-
-report = reporting.SummaryReport()
-
-
 #Base pattern for the passes and overwritting
 def overwrite_pattern(file_path, pattern, passes):
     try:
@@ -16,7 +11,7 @@ def overwrite_pattern(file_path, pattern, passes):
             for _ in range (passes):
                 f.seek(0)
                 f.write(pattern * length)
-                f.flush
+                f.flush()
                 os.fsync(f.fileno()) 
 
     except Exception as e:
@@ -24,7 +19,8 @@ def overwrite_pattern(file_path, pattern, passes):
         print(f"Error overwriting file {file_path}: {e}")
 
 
-def wipe_file(file_path, passes=3):
+def wipe_file(file_path, passes=3, summary_report = None):
+    
     patterns = [
         bytearray([0] * os.path.getsize(file_path)),
         bytearray([255] * os.path.getsize(file_path)),
@@ -37,10 +33,13 @@ def wipe_file(file_path, passes=3):
     try:
         os.remove(file_path)
         reporting.real_time_output(operation_type="file", path=file_path, passes=passes)
-        report.track_file_wipe(file_path)
+        if summary_report:
+            summary_report.track_file_wipe(file_path)
     except Exception as e:
-        report.track_error(f"Error deleting file {file_path}: {e}")
-        print(f"Error deleting file {file_path}: {e}")
+        error_message = f"Error deleting file {file_path}: {e}"
+        print(error_message)
+        if summary_report:
+            summary_report.track_error(error_message)
 
 
     
