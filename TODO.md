@@ -14,7 +14,7 @@
 [ ] Performance Optimization:
     Implement multi-threading and chunked processing to speed up file and directory wiping operations
 
-[ ] Reporting:
+[X] Reporting:
     Generate basic command-line reports summarizing the wiping process and any errors encountered
 
 [ ] Documentation:
