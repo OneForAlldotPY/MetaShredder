@@ -4,10 +4,11 @@ import argparse
 import directory_wipe
 import file_wipe
 import free_space_wipe
+import reporting
 
 #Main function
 
-def deletetion_confirmation():
+def deletion_confirmation():
     # Prompt the user for a confirmation before proceeding with the wiping process
     
     while True:
@@ -28,22 +29,25 @@ def main():
 
     args = parser.parse_args()
 
-    deletetion_confirmation()
-
+    deletion_confirmation()
 
     path = args.path
     passes = args.passes
+    report = reporting.SummaryReport()
 
     if os.path.isfile(path):
-        file_wipe.wipe_file(path, passes)
+        file_wipe.wipe_file(path, passes, summary_report=report)
+
     elif os.path.isdir(path):
-        directory_wipe.wipe_directory(path, passes)
+        directory_wipe.wipe_directory(path, passes, summary_report=report)
     else: 
         print(f"Error: {path} is neither a file or a directory.")
         return
     
     if args.wipe_free_space:
         free_space_wipe.wipe_free_space(path)
+
+    report.print_summary()
 
 if __name__ == "__main__":
     main()
