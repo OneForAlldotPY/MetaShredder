@@ -43,8 +43,8 @@ class SummaryReport:
         print("--------------------------")
         
         print(f"Total files wiped: {len(self.wiped_files)}")
-        for file in self.wiped_files:
-            print(f"- {file}")
+        for current_file in self.wiped_files:
+            print(f"- {current_file}")
 
         print(f"Total directories wiped: {len(self.wiped_directories)}")
         for directory in self.wiped_directories:
