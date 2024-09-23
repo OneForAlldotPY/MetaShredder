@@ -1,8 +1,8 @@
 import random
 import os
 import shutil
-import file_wipe
-import reporting
+import metashred.file_wipe as file_wipe
+import metashred.reporting as reporting
 
 def random_string(length=8):
     chars = 'abcdefghijklmnopqrstouvxwyz0123456789_-'

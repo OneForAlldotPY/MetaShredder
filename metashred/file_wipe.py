@@ -1,7 +1,7 @@
 import os
 import shutil
 import random
-import reporting
+import metashred.reporting as reporting
 
 #Base pattern for the passes and overwritting
 def overwrite_pattern(file_path, pattern, passes):
