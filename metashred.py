@@ -1,10 +1,10 @@
 #Imports
 import os 
 import argparse
-import directory_wipe
-import file_wipe
-import free_space_wipe
-import reporting
+import metashred.directory_wipe as directory_wipe
+import metashred.file_wipe as file_wipe
+import metashred.free_space_wipe as free_space_wipe
+import metashred.reporting as reporting
 
 #Main function
 
