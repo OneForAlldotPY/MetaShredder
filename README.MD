@@ -49,3 +49,7 @@ MetaShredder is designed to be run from the command line. You can securely wipe 
 
 ``python metashred.py "path/to/directory"``
 
+## How It Works
+
+MetaShredder is a secure file and directory deletion tool designed to ensure that sensitive data is thoroughly wipped from storage and cannot be recovered through forensic means. It achieves this by employing multiple passes of overwriting data with random patterns and securely deleting file metadata. The entire process is structured to meet high-security standards for digital data destruction.
+
